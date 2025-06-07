@@ -1386,3 +1386,13 @@ nav.navbar .nav-links a.active-link::before
             transform: translateX(0);
   }
 }
+
+/* Efek Pop Up untuk Ikon Musik */
+#play-music-icon {
+  display: inline-block; /* Memastikan transformasi bekerja dengan baik */
+  transition: transform 0.3s ease; /* Menambahkan transisi agar animasi halus */
+}
+
+#play-music-icon:hover {
+  transform: scale(1.2); /* Memperbesar ikon sebesar 20% saat kursor di atasnya */
+}
