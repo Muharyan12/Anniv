@@ -142,32 +142,32 @@ fetch('JSON/journalData.json')
     let popup = '';
 
     r.forEach((data, i) => {
-      //max char in title card
-      let char = [...data.title];
-      let maxChar = char.slice(0, 43);
-      if (maxChar.length == 43)
-      {
-        maxChar.push('...');
-      }
+  // Logika pemotongan judul dengan JavaScript dihapus.
+  // Kita akan menggunakan judul asli dari data.
+  let title = data.title;
 
       card += `<div class="card intro-wavy">
-        <div class="content-text text-center">
-          <h1 class="md">${maxChar.join('')}</h1>
+        <div class="card-image">
+          <img src="${data.image}" alt="${data.title}">
         </div>
-
-        <button type="button" name="button" class="btn btn-outline btn-oprimary" data-index="${i}">Read More</button>
-
-        <div class="card-footer flex">
-          <div class="post-date">
-            <span class="flex"><i class='bx bx-time-five icon'></i>${data.time.date}/${data.time.month}/${data.time.year}</span>
+        <div class="card-body">
+          <div class="content-text text-center">
+            <h1 class="md">${title}</h1>
           </div>
 
-          <div class="badge bg-dark-green">
-            <strong>${data.badge}</strong>
+          <button type="button" name="button" class="btn btn-outline btn-oprimary" data-index="${i}">Read More</button>
+
+          <div class="card-footer flex">
+            <div class="post-date">
+              <span class="flex"><i class='bx bx-time-five icon'></i>${data.time.date}/${data.time.month}/${data.time.year}</span>
+            </div>
+
+            <div class="badge bg-dark-green">
+              <strong>${data.badge}</strong>
+            </div>
           </div>
         </div>
-      </div>`
-      ;
+      </div>`;
     });
 
     containerCard.innerHTML = card;

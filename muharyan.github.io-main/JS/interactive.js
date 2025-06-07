@@ -181,3 +181,69 @@ window.addEventListener('scroll', () => {
 //add navlinks active
 window.addEventListener('scroll', scrollActive);
 navMobile();
+
+
+// === YouTube Music Player (Robust Loader) ===
+
+// 1. Definisikan fungsi yang akan dipanggil oleh API setelah siap.
+// Menaruhnya di 'window' memastikan fungsi ini bisa diakses secara global.
+window.onYouTubeIframeAPIReady = function() {
+  new YT.Player('youtube-player', {
+    height: '0',
+    width: '0',
+    // Ganti sementara untuk tes
+    videoId: 'jfKfPfyJRdk',
+    playlist: 'jfKfPfyJRdk',
+    playerVars: {
+      'playsinline': 1,
+      'autoplay': 0,
+      'loop': 1,
+      'playlist': '7'
+    },
+    events: {
+      'onReady': onPlayerReady
+    }
+  });
+};
+
+// 2. Definisikan fungsi-fungsi lainnya
+let player; // Variabel untuk menampung object player
+
+function onPlayerReady(event) {
+  player = event.target; // Simpan object player setelah siap
+  const playIcon = document.getElementById('play-music-icon');
+  if (playIcon) {
+    // Tambahkan listener HANYA setelah player benar-benar siap
+    playIcon.addEventListener('click', togglePlayPause);
+  }
+}
+
+function togglePlayPause() {
+  const playIcon = document.getElementById('play-music-icon');
+  if (!player || !playIcon) return; // Pengaman jika player/ikon tidak ada
+
+  const playerState = player.getPlayerState();
+  if (playerState === YT.PlayerState.PLAYING) {
+    player.pauseVideo();
+    playIcon.classList.remove('bx-pause-circle');
+    playIcon.classList.add('bx-play-circle');
+  } else {
+    player.playVideo();
+    playIcon.classList.remove('bx-play-circle');
+    playIcon.classList.add('bx-pause-circle');
+  }
+}
+
+// 3. Fungsi ini akan memuat script YouTube API secara dinamis
+function loadYouTubeAPI() {
+    const tag = document.createElement('script');
+    tag.src = "https://www.youtube.com/iframe_api";
+    const firstScriptTag = document.getElementsByTagName('script')[0];
+    firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
+}
+
+// 4. Panggil fungsi untuk memuat API
+// Kita hanya memuat API jika div player-nya ada
+if (document.getElementById('youtube-player')) {
+    loadYouTubeAPI();
+}
